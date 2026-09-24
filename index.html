@@ -1,546 +1,1156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>My Web Tools</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<title>My Web Tools</title>
 
-        html {
-            min-height: 100%;
-        }
+<style>
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            color: #1f2937;
-            min-height: 100vh;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-            background-image:
-                linear-gradient(
-                    rgba(255, 255, 255, 0.58),
-                    rgba(255, 255, 255, 0.58)
-                ),
-                url("portal-background.png");
+:root {
+    --page-overlay: rgba(255,255,255,0.58);
+    --header-bg: rgba(20,30,25,0.78);
+    --header-text: #ffffff;
 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-        }
+    --section-text: #183b2a;
 
-        /* ===== HEADER ===== */
+    --card-bg: rgba(255,255,255,0.78);
+    --card-hover: rgba(255,255,255,0.92);
+    --card-text: #183b2a;
+    --card-description: #53635a;
 
-        header {
-            position: relative;
-            padding: 35px 70px 30px;
-            text-align: center;
+    --footer-text: #425248;
 
-            background: rgba(20, 30, 25, 0.78);
-            color: white;
+    --accent: #2f6b4f;
+}
 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--card-text);
+    min-height: 100vh;
 
-            border-bottom: 1px solid rgba(255,255,255,0.25);
-        }
+    background-image:
+        linear-gradient(
+            var(--page-overlay),
+            var(--page-overlay)
+        ),
+        url("portal-background.png");
 
-        header h1 {
-            font-size: 38px;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 
-        header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
+    transition:
+        background 0.3s,
+        color 0.3s;
+}
 
-        /* ===== SETTINGS BUTTON ===== */
+/* ================= HEADER ================= */
 
-        .settings-button {
-            position: absolute;
-            top: 22px;
-            right: 28px;
+header {
+    position: relative;
 
-            border: 1px solid rgba(255,255,255,0.35);
-            background: rgba(255,255,255,0.12);
-            color: white;
+    padding: 35px 70px 30px;
 
-            padding: 10px 15px;
-            border-radius: 10px;
+    text-align: center;
 
-            cursor: pointer;
-            font-size: 14px;
+    background: var(--header-bg);
+    color: var(--header-text);
 
-            transition: 0.2s;
-        }
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 
-        .settings-button:hover {
-            background: rgba(255,255,255,0.22);
-            transform: translateY(-1px);
-        }
+    border-bottom:
+        1px solid rgba(255,255,255,0.25);
+}
 
-        /* ===== MAIN CONTAINER ===== */
+header h1 {
+    font-size: 38px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
 
-        .container {
-            max-width: 1150px;
-            margin: 45px auto;
-            padding: 0 25px;
-        }
+header p {
+    font-size: 16px;
+    opacity: 0.9;
+}
 
-        /* ===== SECTION ===== */
+/* ================= SETTINGS BUTTON ================= */
 
-        .section {
-            margin-bottom: 45px;
-        }
+.settings-button {
+    position: absolute;
 
-        .section-title {
-            font-size: 27px;
-            margin-bottom: 20px;
+    top: 22px;
+    right: 28px;
 
-            color: #183b2a;
+    border:
+        1px solid rgba(255,255,255,0.35);
 
-            text-shadow:
-                0 1px 3px rgba(255,255,255,0.8);
-        }
+    background:
+        rgba(255,255,255,0.12);
 
-        /* ===== TOOL GRID ===== */
+    color: white;
 
-        .tools-grid {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
+    padding: 10px 15px;
 
-            gap: 20px;
-        }
+    border-radius: 10px;
 
-        /* ===== TOOL CARD ===== */
+    cursor: pointer;
 
-        .tool-card {
-            display: block;
+    font-size: 14px;
 
-            background: rgba(255,255,255,0.78);
+    transition: 0.2s;
+}
 
-            border: 1px solid rgba(255,255,255,0.65);
-            border-radius: 16px;
+.settings-button:hover {
+    background:
+        rgba(255,255,255,0.22);
 
-            padding: 25px;
+    transform:
+        translateY(-1px);
+}
 
-            text-decoration: none;
-            color: inherit;
+/* ================= MAIN ================= */
 
-            box-shadow:
-                0 8px 25px rgba(0,0,0,0.12);
+.container {
+    max-width: 1150px;
 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+    margin: 45px auto;
 
-            transition:
-                transform 0.2s,
-                box-shadow 0.2s,
-                background 0.2s;
-        }
+    padding: 0 25px;
+}
 
-        .tool-card:hover {
-            transform: translateY(-5px);
+.section {
+    margin-bottom: 45px;
+}
 
-            background: rgba(255,255,255,0.90);
+.section-title {
+    font-size: 27px;
 
-            box-shadow:
-                0 12px 30px rgba(0,0,0,0.18);
-        }
+    margin-bottom: 20px;
 
-        .tool-icon {
-            font-size: 38px;
-            margin-bottom: 14px;
-        }
+    color: var(--section-text);
 
-        .tool-card h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-            color: #183b2a;
-        }
+    text-shadow:
+        0 1px 3px rgba(255,255,255,0.8);
+}
 
-        .tool-card p {
-            color: #53635a;
-            line-height: 1.5;
-            font-size: 14px;
-        }
+/* ================= GRID ================= */
 
-        /* ===== COMING SOON ===== */
+.tools-grid {
+    display: grid;
 
-        .coming-soon {
-            opacity: 0.70;
-            cursor: default;
-        }
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px,1fr)
+        );
 
-        .coming-soon:hover {
-            transform: none;
-        }
+    gap: 20px;
+}
 
-        /* ===== FOOTER ===== */
+/* ================= CARD ================= */
 
-        footer {
-            text-align: center;
+.tool-card {
+    display: block;
 
-            padding: 30px 20px 40px;
+    background:
+        var(--card-bg);
 
-            color: #425248;
+    border:
+        1px solid rgba(255,255,255,0.65);
 
-            font-size: 13px;
+    border-radius: 16px;
 
-            text-shadow:
-                0 1px 3px rgba(255,255,255,0.8);
-        }
+    padding: 25px;
 
-        /* ===== SETTINGS MESSAGE ===== */
+    text-decoration: none;
 
-        .settings-panel {
-            display: none;
+    color: inherit;
 
-            position: fixed;
-            top: 80px;
-            right: 25px;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.12);
 
-            width: 280px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 
-            padding: 22px;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+}
 
-            background: rgba(25,30,27,0.94);
-            color: white;
+.tool-card:hover {
+    transform:
+        translateY(-5px);
 
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 14px;
+    background:
+        var(--card-hover);
 
-            box-shadow:
-                0 15px 40px rgba(0,0,0,0.30);
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.18);
+}
 
-            z-index: 1000;
+.tool-icon {
+    font-size: 38px;
 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
+    margin-bottom: 14px;
+}
 
-        .settings-panel.show {
-            display: block;
-        }
+.tool-card h3 {
+    font-size: 20px;
 
-        .settings-panel h3 {
-            margin-bottom: 10px;
-        }
+    margin-bottom: 8px;
 
-        .settings-panel p {
-            font-size: 14px;
-            line-height: 1.5;
-            opacity: 0.85;
-        }
+    color: var(--card-text);
+}
 
-        .close-settings {
-            margin-top: 18px;
+.tool-card p {
+    color:
+        var(--card-description);
 
-            width: 100%;
+    line-height: 1.5;
 
-            padding: 9px;
+    font-size: 14px;
+}
 
-            border: none;
-            border-radius: 8px;
+.coming-soon {
+    opacity: 0.70;
+}
 
-            cursor: pointer;
-        }
+.coming-soon:hover {
+    transform: none;
+}
 
-        /* ===== MOBILE ===== */
+/* ================= FOOTER ================= */
 
-        @media (max-width: 700px) {
+footer {
+    text-align: center;
 
-            header {
-                padding: 30px 20px 25px;
-            }
+    padding:
+        30px 20px 40px;
 
-            header h1 {
-                font-size: 30px;
-            }
+    color:
+        var(--footer-text);
 
-            .settings-button {
-                position: static;
-                margin-top: 18px;
-            }
+    font-size: 13px;
 
-            .container {
-                margin-top: 30px;
-            }
+    text-shadow:
+        0 1px 3px rgba(255,255,255,0.8);
+}
 
-            .section-title {
-                font-size: 23px;
-            }
+/* ================= SETTINGS PANEL ================= */
 
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.settings-panel {
+    display: none;
+
+    position: fixed;
+
+    top: 80px;
+    right: 25px;
+
+    width: 310px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    padding: 22px;
+
+    background:
+        rgba(25,30,27,0.96);
+
+    color: white;
+
+    border:
+        1px solid rgba(255,255,255,0.2);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.30);
+
+    z-index: 1000;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.settings-panel.show {
+    display: block;
+}
+
+.settings-panel h3 {
+    margin-bottom: 18px;
+}
+
+.setting-label {
+    display: block;
+
+    font-size: 13px;
+
+    margin-bottom: 8px;
+
+    opacity: 0.85;
+}
+
+/* ================= THEME BUTTONS ================= */
+
+.theme-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.theme-button {
+    padding: 10px 5px;
+
+    border:
+        1px solid rgba(255,255,255,0.2);
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.theme-button:hover {
+    background:
+        rgba(255,255,255,0.18);
+}
+
+.theme-button.active {
+    border:
+        2px solid white;
+
+    background:
+        rgba(255,255,255,0.20);
+}
+
+/* ================= CUSTOM ================= */
+
+.custom-settings {
+    display: none;
+
+    border-top:
+        1px solid rgba(255,255,255,0.15);
+
+    padding-top: 15px;
+
+    margin-top: 5px;
+}
+
+.custom-settings.show {
+    display: block;
+}
+
+.custom-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+}
+
+.custom-row input[type="color"] {
+    width: 55px;
+    height: 30px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+/* ================= CLOSE ================= */
+
+.close-settings {
+    margin-top: 18px;
+
+    width: 100%;
+
+    padding: 9px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:700px) {
+
+    header {
+        padding:
+            30px 20px 25px;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    .settings-button {
+        position: static;
+
+        margin-top: 18px;
+    }
+
+    .container {
+        margin-top: 30px;
+    }
+
+    .section-title {
+        font-size: 23px;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-panel {
+        left: 15px;
+        right: 15px;
+
+        width: auto;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <!-- HEADER -->
+<!-- ================= HEADER ================= -->
 
-    <header>
+<header>
 
-        <button
-            class="settings-button"
-            onclick="toggleSettings()">
-            ⚙️ Settings
-        </button>
+<button
+    class="settings-button"
+    onclick="toggleSettings()">
 
-        <h1>MY WEB TOOLS</h1>
+    ⚙️ Settings
 
-        <p>Engineering & Personal Tools</p>
+</button>
 
-    </header>
+<h1>MY WEB TOOLS</h1>
 
+<p>
+    Engineering & Personal Tools
+</p>
 
-    <!-- SETTINGS PANEL -->
+</header>
 
-    <div
-        id="settingsPanel"
-        class="settings-panel">
 
-        <h3>⚙️ Settings</h3>
+<!-- ================= SETTINGS ================= -->
 
-        <p>
-            Theme, font, background and custom
-            appearance settings will be available here.
-        </p>
+<div
+    id="settingsPanel"
+    class="settings-panel">
 
-        <p style="margin-top:10px;">
-            🎨 Theme system — Coming Soon
-        </p>
+<h3>⚙️ Settings</h3>
 
-        <button
-            class="close-settings"
-            onclick="toggleSettings()">
-            Close
-        </button>
+<label class="setting-label">
+    Theme
+</label>
 
-    </div>
+<div class="theme-grid">
 
+<button
+    class="theme-button"
+    data-theme="dark"
+    onclick="setTheme('dark')">
 
-    <!-- MAIN -->
+    🌙 Dark
 
-    <div class="container">
+</button>
 
+<button
+    class="theme-button"
+    data-theme="light"
+    onclick="setTheme('light')">
 
-        <!-- ENGINEERING -->
+    ☀️ Light
 
-        <div class="section">
+</button>
 
-            <h2 class="section-title">
-                🔧 Engineering
-            </h2>
+<button
+    class="theme-button"
+    data-theme="minimal"
+    onclick="setTheme('minimal')">
 
-            <div class="tools-grid">
+    ✨ Minimal
 
+</button>
 
-                <a
-                    class="tool-card coming-soon"
-                    href="#">
+<button
+    class="theme-button"
+    data-theme="pastel"
+    onclick="setTheme('pastel')">
 
-                    <div class="tool-icon">
-                        📊
-                    </div>
+    🌸 Pastel
 
-                    <h3>
-                        Cpk Calculator
-                    </h3>
+</button>
 
-                    <p>
-                        Process capability and Cpk analysis.
-                    </p>
+<button
+    class="theme-button"
+    data-theme="digital"
+    onclick="setTheme('digital')">
 
-                </a>
+    💻 Digital
 
+</button>
 
-                <a
-                    class="tool-card coming-soon"
-                    href="#">
+<button
+    class="theme-button"
+    data-theme="custom"
+    onclick="setTheme('custom')">
 
-                    <div class="tool-icon">
-                        📐
-                    </div>
+    🎨 Custom
 
-                    <h3>
-                        Stack-up Calculator
-                    </h3>
+</button>
 
-                    <p>
-                        RSS tolerance and stack-up calculation.
-                    </p>
+</div>
 
-                </a>
 
+<div
+    id="customSettings"
+    class="custom-settings">
 
-                <a
-                    class="tool-card coming-soon"
-                    href="#">
+<label class="setting-label">
+    Custom Colors
+</label>
 
-                    <div class="tool-icon">
-                        📈
-                    </div>
+<div class="custom-row">
 
-                    <h3>
-                        Hypothesis Test
-                    </h3>
+<span>
+    Main Text
+</span>
 
-                    <p>
-                        Statistical hypothesis testing and analysis.
-                    </p>
+<input
+    type="color"
+    id="customText"
+    value="#183b2a">
 
-                </a>
+</div>
 
+<div class="custom-row">
 
-                <a
-                    class="tool-card coming-soon"
-                    href="#">
+<span>
+    Card Color
+</span>
 
-                    <div class="tool-icon">
-                        📉
-                    </div>
+<input
+    type="color"
+    id="customCard"
+    value="#ffffff">
 
-                    <h3>
-                        Regression Test
-                    </h3>
+</div>
 
-                    <p>
-                        Regression analysis and relationship testing.
-                    </p>
+<div class="custom-row">
 
-                </a>
+<span>
+    Accent
+</span>
 
+<input
+    type="color"
+    id="customAccent"
+    value="#2f6b4f">
 
-                <a
-                    class="tool-card coming-soon"
-                    href="#">
+</div>
 
-                    <div class="tool-icon">
-                        📊
-                    </div>
+</div>
 
-                    <h3>
-                        Time Series Plot
-                    </h3>
 
-                    <p>
-                        Time-based data visualization and trend analysis.
-                    </p>
+<button
+    class="close-settings"
+    onclick="toggleSettings()">
 
-                </a>
+    Close
 
-            </div>
+</button>
 
-        </div>
+</div>
 
 
-        <!-- PERSONAL -->
+<!-- ================= MAIN ================= -->
 
-        <div class="section">
+<div class="container">
 
-            <h2 class="section-title">
-                👤 Personal
-            </h2>
 
-            <div class="tools-grid">
+<!-- ENGINEERING -->
 
+<div class="section">
 
-                <a
-                    class="tool-card"
-                    href="https://somchardphannam-art.github.io/Countdown-Custom/">
+<h2 class="section-title">
+    🔧 Engineering
+</h2>
 
-                    <div class="tool-icon">
-                        ⏱️
-                    </div>
+<div class="tools-grid">
 
-                    <h3>
-                        Countdown Custom
-                    </h3>
 
-                    <p>
-                        Custom countdown with themes,
-                        fonts and background.
-                    </p>
+<a
+    class="tool-card coming-soon"
+    href="#">
 
-                </a>
+<div class="tool-icon">
+    📊
+</div>
 
+<h3>
+    Cpk Calculator
+</h3>
 
-                <a
-                    class="tool-card"
-                    href="https://somchardphannam-art.github.io/Countdown-2028/">
+<p>
+    Process capability and Cpk analysis.
+</p>
 
-                    <div class="tool-icon">
-                        🎯
-                    </div>
+</a>
 
-                    <h3>
-                        Countdown 2028
-                    </h3>
 
-                    <p>
-                        Countdown to 1 January 2028.
-                    </p>
+<a
+    class="tool-card coming-soon"
+    href="#">
 
-                </a>
+<div class="tool-icon">
+    📐
+</div>
 
+<h3>
+    Stack-up Calculator
+</h3>
 
-                <a
-                    class="tool-card coming-soon"
-                    href="#">
+<p>
+    RSS tolerance and stack-up calculation.
+</p>
 
-                    <div class="tool-icon">
-                        🚴
-                    </div>
+</a>
 
-                    <h3>
-                        Bike Tools
-                    </h3>
 
-                    <p>
-                        Future bicycle and cycling tools.
-                    </p>
+<a
+    class="tool-card coming-soon"
+    href="#">
 
-                </a>
+<div class="tool-icon">
+    📈
+</div>
 
-            </div>
+<h3>
+    Hypothesis Test
+</h3>
 
-        </div>
+<p>
+    Statistical hypothesis testing and analysis.
+</p>
 
-    </div>
+</a>
 
 
-    <!-- FOOTER -->
+<a
+    class="tool-card coming-soon"
+    href="#">
 
-    <footer>
-        My Web Tools © 2026
-    </footer>
+<div class="tool-icon">
+    📉
+</div>
 
+<h3>
+    Regression Test
+</h3>
 
-    <script>
+<p>
+    Regression analysis and relationship testing.
+</p>
 
-        function toggleSettings() {
+</a>
 
-            const panel =
-                document.getElementById("settingsPanel");
 
-            panel.classList.toggle("show");
+<a
+    class="tool-card coming-soon"
+    href="#">
 
-        }
+<div class="tool-icon">
+    📊
+</div>
 
-    </script>
+<h3>
+    Time Series Plot
+</h3>
+
+<p>
+    Time-based data visualization and trend analysis.
+</p>
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PERSONAL -->
+
+<div class="section">
+
+<h2 class="section-title">
+    👤 Personal
+</h2>
+
+<div class="tools-grid">
+
+
+<a
+    class="tool-card"
+    href="https://somchardphannam-art.github.io/Countdown-Custom/">
+
+<div class="tool-icon">
+    ⏱️
+</div>
+
+<h3>
+    Countdown Custom
+</h3>
+
+<p>
+    Custom countdown with themes,
+    fonts and background.
+</p>
+
+</a>
+
+
+<a
+    class="tool-card"
+    href="https://somchardphannam-art.github.io/Countdown-2028/">
+
+<div class="tool-icon">
+    🎯
+</div>
+
+<h3>
+    Countdown 2028
+</h3>
+
+<p>
+    Countdown to 1 January 2028.
+</p>
+
+</a>
+
+
+<a
+    class="tool-card coming-soon"
+    href="#">
+
+<div class="tool-icon">
+    🚴
+</div>
+
+<h3>
+    Bike Tools
+</h3>
+
+<p>
+    Future bicycle and cycling tools.
+</p>
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<footer>
+    My Web Tools © 2026
+</footer>
+
+
+<script>
+
+/* ================= THEME SYSTEM ================= */
+
+const themes = {
+
+    dark: {
+        overlay: "rgba(0,0,0,0.62)",
+        header: "rgba(10,15,20,0.88)",
+        section: "#ffffff",
+        card: "rgba(20,25,30,0.82)",
+        hover: "rgba(35,42,48,0.92)",
+        text: "#ffffff",
+        description: "#c5cbd0",
+        footer: "#ffffff"
+    },
+
+    light: {
+        overlay: "rgba(255,255,255,0.58)",
+        header: "rgba(20,30,25,0.78)",
+        section: "#183b2a",
+        card: "rgba(255,255,255,0.78)",
+        hover: "rgba(255,255,255,0.92)",
+        text: "#183b2a",
+        description: "#53635a",
+        footer: "#425248"
+    },
+
+    minimal: {
+        overlay: "rgba(245,245,245,0.76)",
+        header: "rgba(255,255,255,0.86)",
+        section: "#333333",
+        card: "rgba(255,255,255,0.88)",
+        hover: "rgba(255,255,255,0.98)",
+        text: "#333333",
+        description: "#666666",
+        footer: "#555555"
+    },
+
+    pastel: {
+        overlay: "rgba(255,245,250,0.66)",
+        header: "rgba(120,90,120,0.78)",
+        section: "#654d65",
+        card: "rgba(255,245,252,0.82)",
+        hover: "rgba(255,250,255,0.96)",
+        text: "#654d65",
+        description: "#806f80",
+        footer: "#654d65"
+    },
+
+    digital: {
+        overlay: "rgba(0,10,15,0.70)",
+        header: "rgba(0,20,28,0.90)",
+        section: "#00e5ff",
+        card: "rgba(0,25,35,0.84)",
+        hover: "rgba(0,40,55,0.94)",
+        text: "#00e5ff",
+        description: "#9adce5",
+        footer: "#00e5ff"
+    },
+
+    custom: {
+        overlay: "rgba(255,255,255,0.58)",
+        header: "rgba(20,30,25,0.78)",
+        section: "#183b2a",
+        card: "rgba(255,255,255,0.78)",
+        hover: "rgba(255,255,255,0.92)",
+        text: "#183b2a",
+        description: "#53635a",
+        footer: "#425248"
+    }
+
+};
+
+
+/* ================= APPLY THEME ================= */
+
+function applyTheme(themeName) {
+
+    const theme =
+        themes[themeName];
+
+    if (!theme) return;
+
+    const root =
+        document.documentElement;
+
+    root.style.setProperty(
+        "--page-overlay",
+        theme.overlay
+    );
+
+    root.style.setProperty(
+        "--header-bg",
+        theme.header
+    );
+
+    root.style.setProperty(
+        "--section-text",
+        theme.section
+    );
+
+    root.style.setProperty(
+        "--card-bg",
+        theme.card
+    );
+
+    root.style.setProperty(
+        "--card-hover",
+        theme.hover
+    );
+
+    root.style.setProperty(
+        "--card-text",
+        theme.text
+    );
+
+    root.style.setProperty(
+        "--card-description",
+        theme.description
+    );
+
+    root.style.setProperty(
+        "--footer-text",
+        theme.footer
+    );
+
+    document
+        .querySelectorAll(".theme-button")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.theme === themeName
+            );
+
+        });
+
+    document
+        .getElementById("customSettings")
+        .classList.toggle(
+            "show",
+            themeName === "custom"
+        );
+
+    localStorage.setItem(
+        "myWebToolsTheme",
+        themeName
+    );
+
+}
+
+
+/* ================= CUSTOM COLORS ================= */
+
+function applyCustomColors() {
+
+    const root =
+        document.documentElement;
+
+    const text =
+        document.getElementById(
+            "customText"
+        ).value;
+
+    const card =
+        document.getElementById(
+            "customCard"
+        ).value;
+
+    const accent =
+        document.getElementById(
+            "customAccent"
+        ).value;
+
+    root.style.setProperty(
+        "--section-text",
+        text
+    );
+
+    root.style.setProperty(
+        "--card-text",
+        text
+    );
+
+    root.style.setProperty(
+        "--card-description",
+        text
+    );
+
+    root.style.setProperty(
+        "--accent",
+        accent
+    );
+
+    root.style.setProperty(
+        "--card-bg",
+        hexToRgba(card,0.78)
+    );
+
+    root.style.setProperty(
+        "--card-hover",
+        hexToRgba(card,0.92)
+    );
+
+    localStorage.setItem(
+        "customText",
+        text
+    );
+
+    localStorage.setItem(
+        "customCard",
+        card
+    );
+
+    localStorage.setItem(
+        "customAccent",
+        accent
+    );
+
+}
+
+
+function hexToRgba(hex,alpha) {
+
+    const r =
+        parseInt(
+            hex.substring(1,3),
+            16
+        );
+
+    const g =
+        parseInt(
+            hex.substring(3,5),
+            16
+        );
+
+    const b =
+        parseInt(
+            hex.substring(5,7),
+            16
+        );
+
+    return `rgba(${r},${g},${b},${alpha})`;
+
+}
+
+
+/* ================= SET THEME ================= */
+
+function setTheme(themeName) {
+
+    applyTheme(themeName);
+
+    if (themeName === "custom") {
+        applyCustomColors();
+    }
+
+}
+
+
+/* ================= SETTINGS ================= */
+
+function toggleSettings() {
+
+    const panel =
+        document.getElementById(
+            "settingsPanel"
+        );
+
+    panel.classList.toggle(
+        "show"
+    );
+
+}
+
+
+/* ================= CUSTOM COLOR EVENTS ================= */
+
+document
+    .querySelectorAll(
+        '#customSettings input[type="color"]'
+    )
+    .forEach(input => {
+
+        input.addEventListener(
+            "input",
+            () => {
+
+                const currentTheme =
+                    localStorage.getItem(
+                        "myWebToolsTheme"
+                    );
+
+                if (currentTheme === "custom") {
+                    applyCustomColors();
+                }
+
+            }
+        );
+
+    });
+
+
+/* ================= LOAD SAVED SETTINGS ================= */
+
+const savedTheme =
+    localStorage.getItem(
+        "myWebToolsTheme"
+    ) || "light";
+
+
+const savedText =
+    localStorage.getItem(
+        "customText"
+    );
+
+const savedCard =
+    localStorage.getItem(
+        "customCard"
+    );
+
+const savedAccent =
+    localStorage.getItem(
+        "customAccent"
+    );
+
+
+if (savedText) {
+    document.getElementById(
+        "customText"
+    ).value = savedText;
+}
+
+if (savedCard) {
+    document.getElementById(
+        "customCard"
+    ).value = savedCard;
+}
+
+if (savedAccent) {
+    document.getElementById(
+        "customAccent"
+    ).value = savedAccent;
+}
+
+
+applyTheme(savedTheme);
+
+if (savedTheme === "custom") {
+    applyCustomColors();
+}
+
+</script>
 
 </body>
 </html>
