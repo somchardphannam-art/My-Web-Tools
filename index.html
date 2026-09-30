@@ -31,7 +31,7 @@ body{
     min-height:100vh;
     background-image:
       linear-gradient(var(--page-overlay),var(--page-overlay)),
-      url("portal-background.png");
+      url("ideas-beyond-limits-background.jpeg");
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
@@ -158,7 +158,7 @@ footer{
 
 <header>
 <button class="settings-button" onclick="toggleSettings()">⚙️ Settings</button>
-<h1>MY WEB TOOLS</h1>
+<h1>IDEAS BEYOND LIMITS</h1>
 <p>Engineering &amp; Personal Tools</p>
 </header>
 
@@ -284,11 +284,11 @@ Cpk / Cp calculation and process capability analysis<br>
 <h2 class="section-title">👤 Personal</h2>
 <div class="tools-grid">
 
-<a class="tool-card" href="https://somchardphannam-art.github.io/Personal-Plan/" target="_blank" rel="noopener noreferrer">
+<a class="tool-card coming-soon" href="#">
 <div class="tool-icon">📅</div>
 <h3>Personal Plan</h3>
-<p>Calendar, tasks and personal planning.<br>
-<em>Developed by Somchard</em></p>
+<p>Calendar, tasks and personal planning with cloud sync.<br>
+<em>Under Development</em></p>
 </a>
 
 <a class="tool-card" href="https://aphinyasaneha02081992nan.github.io/my-finance-app/" target="_blank" rel="noopener noreferrer">
@@ -319,7 +319,7 @@ Cpk / Cp calculation and process capability analysis<br>
 <footer>My Web Tools © 2026</footer>
 
 <script>
-const DEFAULT_BACKGROUND = "portal-background.png";
+const DEFAULT_BACKGROUND = "ideas-beyond-limits-background.jpeg";
 
 const themes = {
     dark:{
@@ -460,7 +460,7 @@ function saveBackgroundFile(file){
         const data=e.target.result;
         localStorage.setItem("myWebToolsBackground",data);
         document.body.style.backgroundImage=
-          `linear-gradient(var(--page-overlay),var(--page-overlay)),url("${data}")`;
+          `linear-gradient(var(--page-overlay),var(--page-overlay)),url("ideas-beyond-limits-background.jpeg")`;
     };
     reader.readAsDataURL(file);
 }
